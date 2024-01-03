@@ -46,7 +46,7 @@ class Node {
 
     removeAtIdx(idx) {
 
-        let removedItem;
+        let removedItem = this.getAt(idx)
         console.log(this.list)
         if (this.size === 0){
             return null;
@@ -60,6 +60,14 @@ class Node {
             return removedItem;
         }
     
+        if(this.size === 2){
+            removedItem.next = this.first
+            this.first.next = null;
+            this.last = this.first
+            this.size --;
+            return removedItem;
+        }
+
         if (idx === 0 & this.size >= 1){
             removedItem = this.first;
             this.first = this.first.next;
@@ -67,12 +75,11 @@ class Node {
             return removedItem;
         }
     
-        let removedIdx = this.getAt(idx-1)
-        if (!removedIdx || !removedIdx.next){
+        if (!removedItem || !removedItem.next){
             this.size--;
             return
         }
-        removedIdx.next = removedIdx.next.next;
+        removedItem.next = removedItem.next.next;
         }
     
 }
@@ -90,14 +97,12 @@ const findSurvivor = (numOfPeople, skip) => {
             return newList.first.val
         } 
 
-        
-
         start = (start + skip)%linkedlist.size
         linkedlist.removeAtIdx(start)
         return Josephus(linkedlist, start, skip)
     }
 
-    Josephus(newList, 0, skip)
+    return Josephus(newList, 0, skip)
     
 
 }
